@@ -13,7 +13,7 @@ export const signOut = () => {
   return (dispatch) => {
     dispatch({ type: 'ATTEMPTING_LOGIN'});
     auth.signOut().then(() => {
-      dispatch(signedOut);
+      dispatch(signedOut());
     });
   };
 };
