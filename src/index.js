@@ -9,6 +9,7 @@ import Application from './containers/ApplicationContainer';
 import './index.css';
 
 import { startListeningToAuthChanges } from './actions/auth';
+import { startListeningForUsers } from './actions/users';
 
 const middleware = [ thunk ];
 const enhancers = [];
@@ -24,6 +25,7 @@ const store = createStore(
 );
 
 store.dispatch(startListeningToAuthChanges());
+store.dispatch(startListeningForUsers());
 
 ReactDOM.render(
   <Provider store={store}>

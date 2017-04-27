@@ -1,5 +1,7 @@
-import { auth, googleAuthProvider } from '../firebase';
-import { addUser } from './users';
+import { auth, database, googleAuthProvider } from '../firebase';
+import pick from 'lodash/pick';
+
+const usersRef = database.ref('users');
 
 export const signIn = () => {
   return (dispatch) => {
@@ -36,10 +38,10 @@ export const startListeningToAuthChanges = () => {
     auth.onAuthStateChanged((user) => {
       if (user) {
         dispatch(signedIn(user));
-        dispatch(addUser(user));
+        usersRef.child(user.uid).set(pick(user, ['displayName', 'photoURL', 'email', 'uid']));
       } else {
         dispatch(signedOut());
       }
-    })
-  }
-}
+    });
+  };
+};
