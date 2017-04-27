@@ -1,10 +1,12 @@
 import { auth, googleAuthProvider } from '../firebase';
+import { addUser } from './users';
 
 export const signIn = () => {
   return (dispatch) => {
     dispatch({ type: 'ATTEMPTING_LOGIN'});
     auth.signInWithPopup(googleAuthProvider).then(({ user }) => {
       dispatch(signedIn(user));
+      dispatch(addUser(user));
     });
   };
 };
