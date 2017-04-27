@@ -1,5 +1,6 @@
 import { auth, database, googleAuthProvider } from '../firebase';
 import pick from 'lodash/pick';
+import registerMessages from '../request-messaging-permission';
 
 const usersRef = database.ref('users');
 
@@ -39,6 +40,7 @@ export const startListeningToAuthChanges = () => {
       if (user) {
         dispatch(signedIn(user));
         usersRef.child(user.uid).set(pick(user, ['displayName', 'photoURL', 'email', 'uid']));
+        registerMessages(user);
       } else {
         dispatch(signedOut());
       }
